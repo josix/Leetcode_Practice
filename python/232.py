@@ -18,26 +18,24 @@ class MyQueue:
         """
         Removes the element from in front of queue and returns that element.
         """
-        while self.s1 != []:
-            self.s2.append(self.s1.pop())
-        top = self.s2.pop()
-        while self.s2 != []:
-            self.s1.append(self.s2.pop())
-        return top
+        if self.s2 == []:
+            while self.s1 != []:
+                self.s2.append(self.s1.pop())
+        return self.s2.pop()
         
 
     def peek(self) -> int:
         """
         Get the front element.
         """
-        return self.s1[0]
+        return self.s1[0] if self.s1 != [] else self.s2[-1]
         
 
     def empty(self) -> bool:
         """
         Returns whether the queue is empty.
         """
-        return len(self.s1) == 0
+        return len(self.s1) == 0 and len(self.s2) == 0
         
 
 
