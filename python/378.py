@@ -1,13 +1,22 @@
 class Solution:
     def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
-        n = len(matrix)
-        candidate = [(row[0], i, 0) for i, row in enumerate(matrix)]
-        import heapq as hq
-        count = 0
-        while count < k - 1:
-            _, row_index, col_index = hq.heappop(candidate)
-            count += 1
-            if col_index != n - 1:
-                hq.heappush(candidate, (matrix[row_index][col_index+1], row_index, col_index + 1))
+        def count_smaller(mid):
+            smaller_num = 0
+            i, j = len(matrix) - 1, 0
+            while i >= 0 and j <= len(matrix) - 1:
+                if matrix[i][j] <= mid:
+                    smaller_num += i + 1
+                    j += 1
+                else:
+                    i -= 1
+            return smaller_num
+        left, right = matrix[0][0], matrix[-1][-1]
+        while left < right:
+            mid = (left + right) // 2
+            count = count_smaller(mid)
+            if count < k:
+                left = mid + 1 # plus one is important
+            else:
+                right = mid
+        return left
             
-        return hq.heappop(candidate)[0]
