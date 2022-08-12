@@ -30,15 +30,7 @@ class Solution:
         # print(f"case: \n{swapping_node_1=}\n{swapping_node_2=}\n{swapping_node_1_prev=}\n{swapping_node_2_prev=}")
         if swapping_node_1 is swapping_node_2: # case that swapping itself
             return head
-        # case that swapping neighbors
-        if swapping_node_2.next is swapping_node_1:
-            swapping_node_1.next, swapping_node_2.next = swapping_node_2, swapping_node_1.next
-            swapping_node_2_prev.next = swapping_node_1
-            return terminal2.next # probably head has been moved
-        if swapping_node_1.next is swapping_node_2:
-            swapping_node_1.next, swapping_node_2.next = swapping_node_2.next, swapping_node_1
-            swapping_node_1_prev.next = swapping_node_2
-            return terminal2.next # probably head has been moved
-        swapping_node_1.next, swapping_node_2.next =  swapping_node_2.next, swapping_node_1.next
+        # swapping previous node first is nessary or it may cause a cycle when k is given than half of the list's length
         swapping_node_1_prev.next, swapping_node_2_prev.next = swapping_node_2, swapping_node_1
-        return terminal2.next # since head has moved
+        swapping_node_1.next, swapping_node_2.next =  swapping_node_2.next, swapping_node_1.next
+        return terminal2.next # since head may has moved
