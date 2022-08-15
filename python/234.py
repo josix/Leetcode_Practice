@@ -6,24 +6,20 @@
 #         self.next = next
 class Solution:
     def isPalindrome(self, head: Optional[ListNode]) -> bool:
-        visited_1 = []
         slow = fast = head
+        rev = ListNode(val=-1)
         while fast and fast.next:
             fast = fast.next.next
-            visited_1.append(slow.val)
+            tmp = slow.next
+            slow.next = rev
+            rev = slow
+            slow = tmp
+        if fast:
             slow = slow.next
-
-        visited_2 = []
-        while slow:
-            visited_2.append(slow.val)
-            slow = slow.next
-            
-        if len(visited_1) < len(visited_2):
-            visited_2.pop(0)
-        
-
-        for i in range(len(visited_1)):
-            if visited_1[i] != visited_2[len(visited_2) - i - 1]:
+        while slow and rev.val != -1:
+            if rev.val != slow.val:
                 return False
+            slow = slow.next
+            rev = rev.next
         return True
 
